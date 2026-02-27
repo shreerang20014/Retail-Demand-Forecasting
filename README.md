@@ -31,4 +31,56 @@ The dataset used in this project is derived from Walmart’s publicly available 
 
 Before beginning the analysis, several initial checks were performed to ensure the dataset was complete and reliable. A uniqueness check confirmed that each item‑store‑day record was represented once, with no duplicate observations after merging. The date range from 2011‑01‑29 to 2015‑12‑31 was verified to contain no missing days, ensuring stable time‑series continuity. Sales values were checked for validity, confirming no negative quantities and revealing a high level of sparsity, with zero‑sales days accounting for 62% to 78% of observations, depending on product category. Memory‑efficient data types were applied to support downstream processing, reducing the merged dataset to approximately 1.6 GB while preserving integrity. These checks ensured a clean, consistent foundation for forecasting and further exploration.
 
+## Executive Summary
+This project evaluates whether modern machine learning models can improve short‑term retail demand forecasting compared with a simple Seasonal Naïve baseline, using Walmart’s publicly available M5 dataset. The dataset contains over 3,000 products sold across 10 stores in California, Texas, and Wisconsin, resulting in tens of thousands of item–store daily time series. Retail demand at the SKU level is highly intermittent, with 62%–78% zero‑sales days, making forecasting particularly challenging and amplifying the importance of stable, hierarchy‑aware models.
+
+Across both validation and test datasets, machine learning models significantly outperform the baseline. LightGBM shows the strongest overall performance, producing lower WRMSSE values and more stable forecasts at aggregated levels, where retail planning decisions typically occur. These results demonstrate that global ML forecasting models can provide meaningful improvements in visibility and reliability for short‑term retail demand.
+
+The improved forecasts were translated into simple, buffer‑based daily inventory signals, illustrating how enhanced predictive accuracy can support replenishment decisions, even without a full optimisation model.
+
+## Key Insights
+### Forecasting Performance Trends
+•	**Seasonal Naïve Baseline:**
+Provided consistent but inflexible forecasts, repeating prior weekly patterns. It struggled with sudden shifts in demand and produced systematic bias due to its inability to adapt to new patterns. 
+
+•	**XGBoost and LightGBM Improvements:**
+Both ML models delivered substantially lower MAE, RMSE, and WRMSSE scores. LightGBM generated smoother, more stable predictions across categories and stores, especially for high-volume aggregated levels.
+
+•	**Impact of Intermittent Demand:**
+High sparsity made SKU-level forecasting difficult for all models. However, aggregation reduced noise and revealed clear weekly seasonality patterns, allowing machine learning models to perform disproportionately better at the category, store, and state levels. 
+
+•	**Hierarchical Structure Matters:**
+Improvements were strongest where it counts operationally, at higher levels where retailers set inventory budgets, plan distribution, and manage capacity. This validates the use of WRMSSE as the primary evaluation metric. 
+
+### Demand Patterns & Behavioral Insights
+•	**Weekly Seasonality:**
+All states and categories exhibited strong weekday patterns, with demand increasing toward weekends. This supports the use of a weekly seasonal baseline. 
+
+•	**Category Differences:**
+FOODS showed the highest volume and lower sparsity, while HOBBIES and HOUSEHOLD exhibited the most intermittent behaviour (up to 78% zero sales days), influencing forecasting difficulty. 
+
+•	**Geographical Variation:**
+Sales totals for CA, TX, and WI varied significantly, confirming the importance of store and state identifiers in forecasting models. 
+
+## Recommendations
+Based on the empirical findings of the forecasting models and observed demand patterns, the following recommendations are provided:
+
+•	**Use LightGBM for short-term retail forecasting.**
+It delivers the most stable and accurate results, especially for operationally important aggregated levels.
+
+•	**Prioritise aggregated-level forecasts for planning.**
+Category, store, and state-level predictions are more reliable and more relevant for replenishment and distribution scheduling.
+
+•	**Apply simple buffer-based inventory rules.**
+Translating forecasts into inventory signals using percentage buffers provides actionable guidance even without full optimisation. 
+
+•	**Monitor high sparsity categories.**
+HOBBIES and HOUSEHOLD items need extra attention due to intermittent demand and higher uncertainty. Consider adjusting safety buffers or reviewing store-level stocking strategies. 
+
+•	**Leverage calendar attributes for planning.**
+Weekday cycles, events, and SNAP-driven behaviour significantly influence demand; retail planners should integrate these into ordering cycles.
+
+
+
+
 
