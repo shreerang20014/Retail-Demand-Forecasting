@@ -69,7 +69,7 @@ FOODS showed the highest volume and lower sparsity, while HOBBIES and HOUSEHOLD 
 Sales totals for CA, TX, and WI varied significantly, confirming the importance of store and state identifiers in forecasting models. 
 
 <img width="1227" height="302" alt="image" src="https://github.com/user-attachments/assets/9633861e-eda7-43de-a401-723fb2a89c3a" />
-<img width="700" height="250" alt="image" src="https://github.com/user-attachments/assets/6f53f10e-1be9-410e-9520-219a04f000df" />
+<img width="590" height="180" alt="image" src="https://github.com/user-attachments/assets/6f53f10e-1be9-410e-9520-219a04f000df" />
 
 
 ## Recommendations
